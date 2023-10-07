@@ -15,3 +15,5 @@ js-sys = "0.3"
 
 [workspace]
 members = ["src-tauri"]
+
+openssl-sys = {version = "0.9", features = ["vendored"]}

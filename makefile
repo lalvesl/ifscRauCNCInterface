@@ -1,0 +1,2 @@
+init:
+	make.sh init

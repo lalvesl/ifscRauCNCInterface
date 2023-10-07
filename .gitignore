@@ -2,3 +2,4 @@
 /target/
 /Cargo.lock
 /.xwin-cache
+/docker/build
