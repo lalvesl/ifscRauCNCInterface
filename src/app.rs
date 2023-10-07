@@ -4,6 +4,8 @@ use wasm_bindgen::prelude::*;
 use wasm_bindgen_futures::spawn_local;
 use yew::prelude::*;
 
+use crate::components::header::Header;
+
 #[wasm_bindgen]
 extern "C" {
     #[wasm_bindgen(js_namespace = ["window", "__TAURI__", "tauri"])]
@@ -61,9 +63,10 @@ pub fn app() -> Html {
 
     html! {
         <main class="container">
+        <Header />
             <div class="row">
                 <a href="https://tauri.app" target="_blank">
-                    <img src="public/tauri.svg" class="logo tauri" alt="Tauri logo"/>
+                    <img src="public/ifsc-vWithoutCampus.png" class="logo tauri" alt="Tauri logo"/>
                 </a>
                 <a href="https://yew.rs" target="_blank">
                     <img src="public/yew.png" class="logo yew" alt="Yew logo"/>

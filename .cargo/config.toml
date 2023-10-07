@@ -3,5 +3,11 @@ linker = "lld"
 rustflags = [
   "-Lnative=/home/username/.xwin/crt/lib/x86_64",
   "-Lnative=/home/username/.xwin/sdk/lib/um/x86_64",
-  "-Lnative=/home/username/.xwin/sdk/lib/ucrt/x86_64"
+  "-Lnative=/home/username/.xwin/sdk/lib/ucrt/x86_64",
 ]
+
+[target.armv7-unknown-linux-gnueabihf]
+linker = "arm-linux-gnueabihf-gcc"
+
+# [target.aarch64-unknown-linux-gnu]
+# linker = "aarch64-linux-gnu-gcc"
