@@ -28,7 +28,8 @@ buildArchs)
     cp Cargo* $location
     for arch in $(listArchs); do
         echo $arch
-        docker run --rm -ti -v ./:/app "$dockerImgs/$arch"
+        docker run --rm -ti -v $(pwd):/app "$dockerImgs/$arch" \
+        bash -c "ls -lha && trunk build && cargo tauri build --target armv7-unknown-linux-gnueabihf"
     done
     ;;
 *)
