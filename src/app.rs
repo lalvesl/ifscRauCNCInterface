@@ -1,10 +1,8 @@
+use leptos::leptos_dom::ev::SubmitEvent;
+use leptos::*;
 use serde::{Deserialize, Serialize};
 use serde_wasm_bindgen::to_value;
 use wasm_bindgen::prelude::*;
-use wasm_bindgen_futures::spawn_local;
-use yew::prelude::*;
-
-use crate::components::header::Header;
 
 #[wasm_bindgen]
 extern "C" {
@@ -17,79 +15,62 @@ struct GreetArgs<'a> {
     name: &'a str,
 }
 
-#[function_component(App)]
-pub fn app() -> Html {
-    let greet_input_ref = use_node_ref();
+#[component]
+pub fn App() -> impl IntoView {
+    let (name, set_name) = create_signal(String::new());
+    let (greet_msg, set_greet_msg) = create_signal(String::new());
 
-    let name = use_state(|| String::new());
-
-    let greet_msg = use_state(|| String::new());
-    {
-        let greet_msg = greet_msg.clone();
-        let name = name.clone();
-        let name2 = name.clone();
-        use_effect_with_deps(
-            move |_| {
-                spawn_local(async move {
-                    if name.is_empty() {
-                        return;
-                    }
-
-                    let args = to_value(&GreetArgs { name: &*name }).unwrap();
-                    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-                    let new_msg = invoke("greet", args).await.as_string().unwrap();
-                    greet_msg.set(new_msg);
-                });
-
-                || {}
-            },
-            name2,
-        );
-    }
-
-    let greet = {
-        let name = name.clone();
-        let greet_input_ref = greet_input_ref.clone();
-        Callback::from(move |e: SubmitEvent| {
-            e.prevent_default();
-            name.set(
-                greet_input_ref
-                    .cast::<web_sys::HtmlInputElement>()
-                    .unwrap()
-                    .value(),
-            );
-        })
+    let update_name = move |ev| {
+        let v = event_target_value(&ev);
+        set_name.set(v);
     };
 
-    html! {
+    let greet = move |ev: SubmitEvent| {
+        ev.prevent_default();
+        spawn_local(async move {
+            if name.get().is_empty() {
+                return;
+            }
+
+            let args = to_value(&GreetArgs { name: &name.get() }).unwrap();
+            // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
+            let new_msg = invoke("greet", args).await.as_string().unwrap();
+            set_greet_msg.set(new_msg);
+        });
+    };
+
+    view! {
         <main class="container">
-        <Header />
             <div class="row">
                 <a href="https://tauri.app" target="_blank">
-                    <img src="public/ifsc-vWithoutCampus.png" class="logo tauri" alt="Tauri logo"/>
+                    <img src="public/tauri.svg" class="logo tauri" alt="Tauri logo"/>
                 </a>
-                <a href="https://yew.rs" target="_blank">
-                    <img src="public/yew.png" class="logo yew" alt="Yew logo"/>
+                <a href="https://docs.rs/leptos/" target="_blank">
+                    <img src="public/leptos.svg" class="logo leptos" alt="Leptos logo"/>
                 </a>
             </div>
 
-            <p>{"Click on the Tauri and Yew logos to learn more."}</p>
+            <p>"Click on the Tauri and Leptos logos to learn more."</p>
 
             <p>
-                {"Recommended IDE setup: "}
-                <a href="https://code.visualstudio.com/" target="_blank">{"VS Code"}</a>
-                {" + "}
-                <a href="https://github.com/tauri-apps/tauri-vscode" target="_blank">{"Tauri"}</a>
-                {" + "}
-                <a href="https://github.com/rust-lang/rust-analyzer" target="_blank">{"rust-analyzer"}</a>
+                "Recommended IDE setup: "
+                <a href="https://code.visualstudio.com/" target="_blank">"VS Code"</a>
+                " + "
+                <a href="https://github.com/tauri-apps/tauri-vscode" target="_blank">"Tauri"</a>
+                " + "
+                <a href="https://github.com/rust-lang/rust-analyzer" target="_blank">"rust-analyzer"</a>
             </p>
 
-            <form class="row" onsubmit={greet}>
-                <input id="greet-input" ref={greet_input_ref} placeholder="Enter a name..." />
-                <button type="submit">{"Greet"}</button>
+            <form class="row" on:submit=greet>
+                <input
+                    id="greet-input"
+                    placeholder="Enter a name..."
+                    on:input=update_name
+                />
+                <button type="submit">"Greet"</button>
             </form>
 
-            <p><b>{ &*greet_msg }</b></p>
+            <p><b>{ move || greet_msg.get() }</b></p>
         </main>
     }
 }
