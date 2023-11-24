@@ -80,6 +80,7 @@ button {
 button:hover {
   border-color: #396cd8;
 }
+
 button:active {
   border-color: #396cd8;
   background-color: #e8e8e8;
@@ -109,22 +110,74 @@ button {
     color: #ffffff;
     background-color: #0f0f0f98;
   }
+
   button:active {
     background-color: #0f0f0f69;
   }
 }
 
-.init-main{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  height: 50vh;
-  padding-top: 25vh;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.init-main > *{
-  color:rgb(50,160,65);
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
+#imgbgd {
+  background-image:url('/public/cnc.png');
+  background-attachment:fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: -1;
+  filter: blur(1.5px);
+}
+
+#imgbgdblur {
+  position: absolute;
+  top: min();
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #FFFB;
+  z-index: -1;
+}
+
+.init-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.init-main>* {
+  margin: 5vh 0 5vh 0;
+  color: rgb(50, 160, 65);
   font-weight: 1000;
 }
 
+#edital{
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  color: rgb(50, 160, 65);
+  font-weight: 1000;
+}
+
+.init-main > h1{
+  font-size: 3rem;
+}
+
+.init-main > h2{
+  font-size: 2.5rem;
+}
