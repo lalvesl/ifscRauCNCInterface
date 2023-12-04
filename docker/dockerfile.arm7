@@ -20,8 +20,8 @@ RUN apt-get update && \
         file \
         libssl-dev \
         pkg-config \
-        openssl &&\
-    apt-get autoclean &&\
+        openssl && \
+    apt-get autoclean && \
     apt-get autoremove -y
 
 # Install Rust
@@ -40,7 +40,7 @@ ENV CARGO_TARGET_DIR=/app/target \
     PKG_CONFIG_ALLOW_CROSS=1 \
     PATH="/root/.cargo/bin:$PATH" \
     WEBKIT_DISABLE_COMPOSITING_MODE=1
-    #WEBKIT_DISABLE_COMPOSITING_MODE=1 prevents error "Could not determine the accessibility bus address" thank you aveltras source: https://github.com/tauri-apps/tauri/issues/4315#issuecomment-1207755694
+#WEBKIT_DISABLE_COMPOSITING_MODE=1 prevents error "Could not determine the accessibility bus address" thank you aveltras source: https://github.com/tauri-apps/tauri/issues/4315#issuecomment-1207755694
 
 RUN rustup target add wasm32-unknown-unknown && \
     cargo install trunk && \
@@ -61,8 +61,8 @@ RUN dpkg --add-architecture armhf && \
         libcairo2-dev:armhf \
         libpango1.0-dev:armhf \
         libgtk-3-dev:armhf \
-        libsoup2.4-dev:armhf &&\
-    apt-get autoclean &&\
+        libsoup2.4-dev:armhf && \
+    apt-get autoclean && \
     apt-get autoremove -y
 
-
+CMD ["bash", "-c", "ls -lha && trunk build && cargo tauri build --target armv7-unknown-linux-gnueabihf"]
