@@ -5,7 +5,7 @@ declare dockerImgs="ifscraucncinterface"
 declare filterArch="dockerfile"
 
 listArchs() {
-    echo $(ls -lha $rootDocker | awk '{print $9}' | grep "$filterArch")
+    echo $(ls -lha $rootDocker | awk '{print $9}' | grep -v "\.dev\$" | grep "$filterArch")
 }
 
 getArch(){
@@ -19,18 +19,16 @@ pathArch(){
 case $1 in
     init)
         for arch in $(listArchs); do
-            cat "$rootDocker/$arch"
             folderArch=$(pathArch $arch)
-            echo $folderArch
+            echo "Creating $dockerImgs/$arch"
             mkdir -p "$folderArch"
             cp "$rootDocker/$arch" "$folderArch"
             cd "$folderArch"
-            docker build . -t "$dockerImgs/$arch" -f "$arch"
-            #docker run --rm -ti -v $location/app "$dockerImgs/$arch"
+            if [ `docker image ls | grep -c "$dockerImgs/$arch"` -eq 0 ] ;then
+                docker build . -t "$dockerImgs/$arch" -f "$arch";
+            fi
+            echo "Image created $dockerImgs/$arch";
         done
-    ;;
-    buildFrontEnd)
-        trunk build
     ;;
     buildArchs)
         rm -rf "$location"
@@ -54,6 +52,21 @@ case $1 in
             docker run --rm -ti -v "$folderArch:/app" "$dockerImgs/$arch" \
             bash -c "ls -lha && trunk build && cargo tauri build --target armv7-unknown-linux-gnueabihf"
         done
+    ;;
+    dev)
+        devImage="$dockerImgs/dev"
+        if [ `docker image ls | grep -c "$devImage"` -eq 0 ] ;then
+            docker build . -t "$devImage" -f "$rootDocker/dockerfile.dev";
+        fi
+        echo "Image created $devImage";
+        docker run \
+        -e DISPLAY=$DISPLAY \
+        -v /tmp/.X11-unix:/tmp/.X11-unix/:rw \
+        --ipc=host \
+        -v $(pwd):/app \
+        -it \
+        --net=host \
+        "$devImage"
     ;;
     *)
         echo wrong option
