@@ -3,3 +3,5 @@
 /Cargo.lock
 /.xwin-cache
 /docker/build*
+s.css
+node_modules
