@@ -17,7 +17,16 @@ pub fn list_docs(handle: tauri::AppHandle) -> String {
             Ok(f) => f,
             Err(_) => panic!("readDir is broken!"),
         })
-        .map(|fd| fd.path().display().to_string());
+        .map(|fd| {
+            fd.path()
+                .display()
+                .to_string()
+                .split("/")
+                .last()
+                .unwrap()
+                .to_string()
+        })
+        .filter(|s| s.contains(&".pdf"));
     println!(
         "{:?}",
         fds.reduce(|buff: String, fd: String| buff + "," + &fd)
