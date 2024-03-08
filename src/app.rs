@@ -33,7 +33,11 @@ pub fn App() -> impl IntoView {
     //         if name.get().is_empty() {
     //             return;
     //         }
-
+    spawn_local(async move {
+        let args = to_value(&GreetArgs { name: &"123" }).unwrap();
+        let new_msg = invoke("list_docs", args).await.as_string().unwrap();
+        println!("{}", new_msg);
+    });
     //         let args = to_value(&GreetArgs { name: &name.get() }).unwrap();
     //         // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
     //         let new_msg = invoke("greet", args).await.as_string().unwrap();
