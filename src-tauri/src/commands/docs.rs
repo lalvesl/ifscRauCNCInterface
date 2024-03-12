@@ -1,7 +1,7 @@
 use std::fs;
 
 #[tauri::command]
-pub fn list_docs(handle: tauri::AppHandle) -> String {
+pub fn list_docs(handle: tauri::AppHandle) -> Vec<String> {
     let resource_path = handle
         .path_resolver()
         .resolve_resource("ifscRauCNCInterfaceManuals")
@@ -12,7 +12,7 @@ pub fn list_docs(handle: tauri::AppHandle) -> String {
         Err(_) => panic!("readDir is broken!"),
     };
 
-    let fds = entries
+    entries
         .map(|f| match f {
             Ok(f) => f,
             Err(_) => panic!("readDir is broken!"),
@@ -26,16 +26,6 @@ pub fn list_docs(handle: tauri::AppHandle) -> String {
                 .unwrap()
                 .to_string()
         })
-        .filter(|s| s.contains(&".pdf"));
-    println!(
-        "{:?}",
-        fds.reduce(|buff: String, fd: String| buff + "," + &fd)
-            .unwrap()
-    );
-
-    // let file = std::fs::File::open(&resource_path).unwrap();
-    // let lang_de: serde_json::Value = serde_json::from_reader(file).unwrap();
-
-    // lang_de.get("hello").unwrap()
-    String::from("123")
+        .filter(|s| s.contains(&".pdf"))
+        .collect::<Vec<String>>()
 }
