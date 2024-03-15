@@ -4,9 +4,9 @@
 mod commands;
 
 use std::fs;
-use commands::docs::list_docs;
+use tauri::Manager;
 
-use crate::{commands::*};
+use crate::commands::*;
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
@@ -33,10 +33,6 @@ fn main() {
                 fds.reduce(|buff: String, fd: String| buff + "," + &fd)
                     .unwrap()
             );
-            // let mut fds = match entries.collect::<Result<Vec<fs::DirEntry>, io::Error>>() {
-            //     Ok(fds) => for fd in fds{ fd.path()},
-            //     Err(_) => panic!("Error on read dir"),
-            // };
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![greet])
