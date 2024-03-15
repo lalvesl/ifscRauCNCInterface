@@ -1,21 +1,30 @@
+use std::usize;
+
 use leptos::leptos_dom::ev::SubmitEvent;
 use leptos::*;
 use serde::{Deserialize, Serialize};
 use serde_wasm_bindgen::to_value;
-use wasm_bindgen::prelude::*;
+use wasm_bindgen::{
+    convert::{FromWasmAbi, ReturnWasmAbi},
+    prelude::*,
+};
+use web_sys::console;
 
-use crate::{components::header::Header, views::init::InitView};
+use crate::{components::header::Header, utils::js_value::*, views::init::InitView};
+
+// #[wasm_bindgen]
+// extern "C" {
+//     #[wasm_bindgen(js_namespace = ["window", "__TAURI__", "tauri"])]
+//     async fn invoke(cmd: &str, args: JsValue) -> JsValue;
+// }
 
 #[wasm_bindgen]
 extern "C" {
     #[wasm_bindgen(js_namespace = ["window", "__TAURI__", "tauri"])]
-    async fn invoke(cmd: &str, args: JsValue) -> JsValue;
+    async fn invoke(cmd: &str) -> JsValue;
 }
 
-#[derive(Serialize, Deserialize)]
-struct GreetArgs<'a> {
-    name: &'a str,
-}
+
 
 #[component]
 pub fn App() -> impl IntoView {
@@ -33,10 +42,22 @@ pub fn App() -> impl IntoView {
     //         if name.get().is_empty() {
     //             return;
     //         }
+
     spawn_local(async move {
-        let args = to_value(&GreetArgs { name: &"123" }).unwrap();
-        let new_msg = invoke("list_docs", args).await.as_string().unwrap();
-        println!("{}", new_msg);
+        let new_msg = invoke("list_docs").await;
+
+        // console::log_1(&new_msg);
+        jsvalue_2_vec_str(new_msg).iter().for_each(|d| consoller(d));
+
+        // Array
+        // match to_value(&GreetArgs {
+        //     name: &new_msg.to_string(),
+        // }) {
+        //     Ok(r) => console::log_1(&r),
+        //     Err(_) => (),
+        // }
+
+        // println!("{}", new_msg.is_array());
     });
     //         let args = to_value(&GreetArgs { name: &name.get() }).unwrap();
     //         // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
