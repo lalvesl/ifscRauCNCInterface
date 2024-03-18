@@ -5,3 +5,4 @@
 /docker/build*
 src/styles.min.css
 node_modules
+package-lock.json
