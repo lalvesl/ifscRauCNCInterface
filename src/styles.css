@@ -24,17 +24,6 @@
   transition: 0.75s;
 }
 
-.row {
-  display: flex;
-  justify-content: center;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
   width: 100vw;
   height: 100vh;
@@ -63,34 +52,4 @@ body {
   height: 100vh;
   background-color: #FFFB;
   z-index: -1;
-}
-
-.init-main {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.init-main>* {
-  margin: 5vh 0 5vh 0;
-  color: rgb(50, 160, 65);
-  font-weight: 1000;
-}
-
-#edital{
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  color: rgb(50, 160, 65);
-  font-weight: 1000;
-}
-
-.init-main > h1{
-  font-size: 3rem;
-}
-
-.init-main > h2{
-  font-size: 2.5rem;
 }
