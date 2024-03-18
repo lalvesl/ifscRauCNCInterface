@@ -4,7 +4,6 @@
 mod commands;
 
 use std::fs;
-use tauri::Manager;
 
 use crate::commands::*;
 

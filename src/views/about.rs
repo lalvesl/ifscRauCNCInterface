@@ -1,8 +1,8 @@
 use crate::{
     components::button::Button,
-    utils::js_value::{consoller, invoke, jsvalue_2_vec_str},
+    utils::js_value::{invoke, jsvalue_2_vec_str},
 };
-use leptos::{html::H1, *};
+use leptos::*;
 
 #[component]
 pub fn About() -> impl IntoView {
