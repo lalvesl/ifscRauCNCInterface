@@ -7,7 +7,7 @@
     "withGlobalTauri": true
   },
   "package": {
-    "productName": "ifscRauCNCInterface",
+    "productName": "IFSC-Rau CNC-UI",
     "version": "0.0.0"
   },
   "tauri": {
