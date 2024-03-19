@@ -12,10 +12,8 @@ pub fn Button(
             view! {<button type="button" class={[common_class, "bg-gifsc text-white"].join(" ")}>{text}</button>}
         }
         "thumb" => {
-            view! {<button type="button" class={[common_class,"bg-gifsc bg-opacity-5 outline-black outline-opacity-50 border-2  text-gifsc"].join(" ")}>{text}</button>}
+            view! {<button type="button" class={[common_class,"bg-gifsc bg-opacity-5 outline-black outline-opacity-50 border-2  text-gifsc hover:bg-white hover:bg-opacity-50"].join(" ")}>{text}</button>}
         }
         _ => view! {<button>error</button>},
     }
-
-    // view! {<button type="button" class="bg-gifsc rounded text-white text-2xl p-4 hover:outline outline-gifsc">{text}</button>}
 }
