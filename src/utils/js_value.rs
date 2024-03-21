@@ -22,14 +22,10 @@ extern "C" {
 }
 
 pub fn jsvalue_2_vec_str(js_array: JsValue) -> Vec<String> {
-    let array = js_array.dyn_into::<js_sys::Array>().unwrap();
-
-    let mut r = Vec::with_capacity(array.length() as usize);
-    for i in 0..array.length() {
-        let js_value = array.get(i);
-        if let Some(js_string) = js_value.as_string() {
-            r.push(js_string);
-        }
-    }
-    r
+    js_array
+        .dyn_into::<js_sys::Array>()
+        .unwrap()
+        .iter()
+        .map(|v| v.as_string().unwrap_or_else(|| String::from("")))
+        .collect::<Vec<String>>()
 }
