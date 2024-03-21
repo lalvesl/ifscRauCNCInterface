@@ -33,7 +33,9 @@ pub fn About() -> impl IntoView {
                         .get()
                         .iter()
                         .map(|s| view!{<div class="m-4">
-                                <Button text={s.to_string()} button_type={"thumb".to_string()}></Button>
+                                <a href={ ["/document/", s].join("") }>
+                                    <Button text={s.to_string().replace(".pdf", "")} button_type={"thumb".to_string()}></Button>
+                                </a>
                             </div>
                             })
                         .collect::<Vec<_>>()
