@@ -23,7 +23,7 @@ pub fn About() -> impl IntoView {
             <div class="flex flex-col">
                 <div>
                     <h1 class="text-4xl pt-16" id="edital">Sobre O Projeto</h1>
-                    <h1 class="text-2xl m-4" id="edital">Edital n&ordm; 02/2023/PROPPI - Universal</h1>
+                    <h1 class="text-2xl m-4" id="edital">{"Edital nº 02/2023/PROPPI - Universal"}</h1>
                 </div>
                 <div>
                     <h1 class="text-4xl pt-16" id="edital">Manuais</h1>
