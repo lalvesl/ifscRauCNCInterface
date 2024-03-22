@@ -1,5 +1,6 @@
 use qrcode_generator::QrCodeEcc;
 use std::fs;
+use urlencoding::encode;
 
 #[tauri::command]
 pub fn list_docs(handle: tauri::AppHandle) -> Vec<String> {
@@ -29,8 +30,20 @@ pub fn list_docs(handle: tauri::AppHandle) -> Vec<String> {
         })
         .filter(|s| s.ends_with(&".pdf"))
         .map(|s| {
-            let qr_code =
-                qrcode_generator::to_svg_to_string(&s, QrCodeEcc::Low, 1024, None::<&str>).unwrap();
+            let qr_code = qrcode_generator::to_svg_to_string(
+                [
+                    "https://cdn.jsdelivr.net/gh/lalvesl/ifscRauCNCInterfaceManuals/",
+                    &encode(&s),
+                ]
+                .join(""),
+                QrCodeEcc::Low,
+                300,
+                None::<&str>,
+            )
+            .unwrap()
+            .replace("fill=\"#FFF\"", "fill-opacity=\"0\"");
+            // let file_path = resource_path.push(s);
+            // fs::read(file_path).unwrap_or_default().
             vec![s, qr_code]
         })
         .into_iter()
