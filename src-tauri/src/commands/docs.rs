@@ -1,3 +1,4 @@
+use base64::{engine::general_purpose, Engine as _};
 use qrcode_generator::QrCodeEcc;
 use std::fs;
 use urlencoding::encode;
@@ -42,9 +43,11 @@ pub fn list_docs(handle: tauri::AppHandle) -> Vec<String> {
             )
             .unwrap()
             .replace("fill=\"#FFF\"", "fill-opacity=\"0\"");
-            // let file_path = resource_path.push(s);
-            // fs::read(file_path).unwrap_or_default().
-            vec![s, qr_code]
+            let mut file_path = resource_path.clone();
+            file_path.push(s.clone());
+            let file_data = fs::read(file_path).unwrap_or_default();
+            let base_str = general_purpose::STANDARD.encode(&file_data);
+            vec![s, qr_code, base_str]
         })
         .into_iter()
         .flatten()
