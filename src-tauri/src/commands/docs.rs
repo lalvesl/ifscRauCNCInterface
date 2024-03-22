@@ -1,3 +1,4 @@
+use qrcode_generator::QrCodeEcc;
 use std::fs;
 
 #[tauri::command]
@@ -26,6 +27,15 @@ pub fn list_docs(handle: tauri::AppHandle) -> Vec<String> {
                 .unwrap()
                 .to_string()
         })
-        .filter(|s| s.contains(&".pdf"))
+        .filter(|s| s.ends_with(&".pdf"))
+        .map(|s| {
+            let qr_code =
+                qrcode_generator::to_svg_to_string(&s, QrCodeEcc::Low, 1024, None::<&str>).unwrap();
+            vec![s, qr_code]
+        })
+        .into_iter()
+        .flatten()
         .collect::<Vec<String>>()
+
+    // .into_iter().flatten().collect::<Vec<u8>>()
 }
