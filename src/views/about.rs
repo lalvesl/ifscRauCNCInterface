@@ -3,6 +3,7 @@ use crate::{
     utils::js_value::{invoke, jsvalue_2_vec_str},
 };
 use leptos::*;
+use urlencoding::encode;
 
 #[component]
 pub fn About() -> impl IntoView {
@@ -33,7 +34,7 @@ pub fn About() -> impl IntoView {
                         .get()
                         .iter()
                         .map(|s| view!{<div class="m-4">
-                                <a href={ ["/document/", s].join("") }>
+                                <a href={ ["/manual/", &encode(s)].join("") }>
                                     <Button text={s.to_string().replace(".pdf", "")} button_type={"thumb".to_string()}></Button>
                                 </a>
                             </div>
