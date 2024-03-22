@@ -33,6 +33,7 @@ pub fn About() -> impl IntoView {
                         move || manuals
                         .get()
                         .iter()
+                        .filter(|s|s.ends_with(".pdf"))
                         .map(|s| view!{<div class="m-4">
                                 <a href={ ["/manual/", &encode(s)].join("") }>
                                     <Button text={s.to_string().replace(".pdf", "")} button_type={"thumb".to_string()}></Button>
