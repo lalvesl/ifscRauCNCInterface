@@ -3,7 +3,7 @@ use leptos_router::*;
 
 use crate::{
     components::header::Header,
-    views::{about::About, init::InitView},
+    views::{about::About, init::InitView, manual::Manual},
 };
 
 #[component]
@@ -16,6 +16,7 @@ pub fn App() -> impl IntoView {
             <Routes>
                 <Route path="/" view=InitView/>
                 <Route path="/about" view=About/>
+                <Route path="/manual/:id" view=Manual/>
                 <Route path="/*any" view=|| view! { <h1>"Not Found"</h1> }/>
             </Routes>
         </Router>
