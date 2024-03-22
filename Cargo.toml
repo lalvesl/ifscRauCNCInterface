@@ -12,6 +12,7 @@ wasm-bindgen = { version = "0.2", features = ["serde-serialize"] }
 wasm-bindgen-futures = "0.4"
 js-sys = "0.3"
 leptos_router = { version = "0.6.9", features = ["csr"] }
+urlencoding = "2.1.3"
 
 [workspace]
 members = ["src-tauri"]
