@@ -1,0 +1,3 @@
+[submodule "ifscRauCNCInterfaceManuals"]
+	path = ifscRauCNCInterfaceManuals
+	url = https://github.com/lalvesl/ifscRauCNCInterfaceManuals.git
