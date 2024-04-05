@@ -68,6 +68,26 @@ dev)
         --net=host \
         "$devImage"
     ;;
+manuals)
+    manuals_atr="src-tauri/manuals"
+    manuals_imgs="public/manuals"
+    path_base="ifscRauCNCInterfaceManuals"
+
+    rm -rfv $manuals_atr $manuals_imgs
+
+    mkdir -p $manuals_atr
+    mkdir -p $manuals_imgs
+
+    for file in $path_base/*.pdf; do
+
+        file_name=$(basename -- "$file")
+        file_name="${file_name%.*}"
+
+        convert pdf2imgs convert -density 200 "$path_base/$file_name.pdf" "$manuals_imgs/${file_name}_%02d.jpg"
+
+        echo $(find $manuals_imgs | grep -c "$file_name") >$manuals_atr/$file_name
+    done
+    ;;
 *)
     echo wrong option
     ;;

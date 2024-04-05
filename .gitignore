@@ -6,3 +6,5 @@
 src/styles.min.css
 node_modules
 package-lock.json
+src-tauri/manuals
+public/manuals

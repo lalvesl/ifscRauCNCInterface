@@ -6,3 +6,6 @@ buildArchs:
 
 dev:
 	./make.sh dev
+
+manuals:
+	./make.sh manuals
