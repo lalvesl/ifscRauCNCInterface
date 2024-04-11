@@ -3,38 +3,10 @@
 
 mod commands;
 
-use std::fs;
-
-use crate::commands::*;
-
-// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-#[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
-}
+use commands::docs;
 
 fn main() {
     tauri::Builder::default()
-        .setup(|_app| {
-            let entries = match fs::read_dir("./src") {
-                Ok(f) => f,
-                Err(_) => panic!("readDir is broken!"),
-            };
-
-            let fds = entries
-                .map(|f| match f {
-                    Ok(f) => f,
-                    Err(_) => panic!("readDir is broken!"),
-                })
-                .map(|fd| fd.path().display().to_string());
-            println!(
-                "{:?}",
-                fds.reduce(|buff: String, fd: String| buff + "," + &fd)
-                    .unwrap()
-            );
-            Ok(())
-        })
-        .invoke_handler(tauri::generate_handler![greet])
         .invoke_handler(tauri::generate_handler![docs::list_docs])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
