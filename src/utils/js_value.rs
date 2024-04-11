@@ -5,7 +5,6 @@ use wasm_bindgen::prelude::*;
 #[cfg(build = "debug")]
 pub fn consoller(text: &str) {
     use serde_wasm_bindgen::to_value;
-    use std::usize;
     use web_sys::console;
     console::log_1(&(to_value(&GreetArgs { name: text })).unwrap())
 }

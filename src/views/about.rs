@@ -8,10 +8,10 @@ use urlencoding::encode;
 #[component]
 pub fn About() -> impl IntoView {
     let (manuals, set_manuals) = create_signal::<Vec<String>>(Vec::<String>::with_capacity(100));
-    // manuals.set(vec!["123".to_string(), "321".to_string()]);
+
     spawn_local(async move {
         let new_msg = invoke("list_docs").await;
-        // jsvalue_2_vec_str(new_msg).iter().for_each(|d| consoller(d));
+
         set_manuals.update(|old_vec| {
             jsvalue_2_vec_str(new_msg)
                 .into_iter()

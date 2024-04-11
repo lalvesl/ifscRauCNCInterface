@@ -1,8 +1,8 @@
 use crate::{
     components::button::Button,
-    utils::js_value::{consoller, invoke, jsvalue_2_vec_str},
+    utils::js_value::{invoke, jsvalue_2_vec_str},
 };
-use leptos::{html, *};
+use leptos::*;
 use leptos_router::*;
 
 #[component]
@@ -13,12 +13,8 @@ pub fn manual() -> impl IntoView {
 
     let (manual_imgs, set_manual_imgs) = create_signal(vec![] as Vec<String>);
 
-    let (manuals, set_manuals) = create_signal(vec![] as Vec<String>);
-
     let (manual_name, _) =
         create_signal(params.with_untracked(|params| params.get("id").cloned().unwrap()));
-
-    let (index, set_index) = create_signal(0 as usize);
 
     spawn_local(async move {
         let new_msg = invoke("list_docs").await;
@@ -42,19 +38,6 @@ pub fn manual() -> impl IntoView {
                 .map(|s| s.to_string())
                 .filter(|s| !s.eq(""))
                 .collect::<Vec<String>>(),
-        );
-
-        // set_manuals.update(|manuals_vec| {
-        //     jsvalue_2_vec_str(new_msg)
-        //         .into_iter()
-        //         .for_each(|s| manuals_vec.push(s));
-        // });
-        set_index.set(
-            manuals
-                .get_untracked()
-                .iter()
-                .position(|s| s.starts_with(manual_name.get().as_str()))
-                .unwrap_or_default() as usize,
         );
     });
 
