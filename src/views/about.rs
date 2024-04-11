@@ -23,7 +23,7 @@ pub fn About() -> impl IntoView {
         <main class="h-full w-full flex justify-center scroll pt-8 text-gifsc text-center font-semibold">
             <div class="flex flex-col">
                 <div>
-                    <h1 class="text-4xl pt-16" id="edital">Sobre O Projeto</h1>
+                    <h1 class="text-4xl pt-16" id="edital">Sobre o Projeto</h1>
                     <h1 class="text-2xl m-4" id="edital">{"Edital nº 02/2023/PROPPI - Universal"}</h1>
                 </div>
                 <div>
@@ -33,7 +33,7 @@ pub fn About() -> impl IntoView {
                         move || manuals
                         .get()
                         .iter()
-                        .filter(|s|s.ends_with(".pdf"))
+                        .filter(|s| s.starts_with("Manual"))
                         .map(|s| view!{<div class="m-4">
                                 <a href={ ["/manual/", &encode(s)].join("") }>
                                     <Button text={s.to_string().replace(".pdf", "")} button_type={"thumb".to_string()}></Button>

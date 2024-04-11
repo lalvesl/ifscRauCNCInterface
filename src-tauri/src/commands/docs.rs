@@ -1,4 +1,3 @@
-use base64::{engine::general_purpose, Engine as _};
 use qrcode_generator::QrCodeEcc;
 use std::fs;
 use urlencoding::encode;
@@ -7,7 +6,7 @@ use urlencoding::encode;
 pub fn list_docs(handle: tauri::AppHandle) -> Vec<String> {
     let resource_path = handle
         .path_resolver()
-        .resolve_resource("ifscRauCNCInterfaceManuals")
+        .resolve_resource("manuals")
         .expect("failed to resolve resource");
 
     let entries = match fs::read_dir(&resource_path) {
@@ -29,12 +28,18 @@ pub fn list_docs(handle: tauri::AppHandle) -> Vec<String> {
                 .unwrap()
                 .to_string()
         })
-        .filter(|s| s.ends_with(&".pdf"))
         .map(|s| {
+            let mut file_path = resource_path.clone();
+            file_path.push(s.clone());
+            let file = fs::read(file_path).unwrap();
+            let file_data = String::from_utf8_lossy(&file);
+            let file_meta_data = file_data.split("\n").collect::<Vec<_>>();
+            let doc_name = file_meta_data[0].to_string();
             let qr_code = qrcode_generator::to_svg_to_string(
                 [
                     "https://cdn.jsdelivr.net/gh/lalvesl/ifscRauCNCInterfaceManuals/",
-                    &encode(&s),
+                    &encode(&doc_name),
+                    ".pdf",
                 ]
                 .join(""),
                 QrCodeEcc::Low,
@@ -43,11 +48,15 @@ pub fn list_docs(handle: tauri::AppHandle) -> Vec<String> {
             )
             .unwrap()
             .replace("fill=\"#FFF\"", "fill-opacity=\"0\"");
-            let mut file_path = resource_path.clone();
-            file_path.push(s.clone());
-            let file_data = fs::read(file_path).unwrap_or_default();
-            let base_str = general_purpose::STANDARD.encode(&file_data);
-            vec![s, qr_code, base_str]
+            vec![
+                doc_name,
+                qr_code,
+                file_meta_data[1..]
+                    .iter()
+                    .map(|s| s.to_string())
+                    .collect::<Vec<String>>()
+                    .join("//"),
+            ]
         })
         .into_iter()
         .flatten()
