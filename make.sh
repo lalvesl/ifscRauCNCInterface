@@ -82,10 +82,12 @@ manuals)
 
         file_name=$(basename -- "$file")
         file_name="${file_name%.*}"
+        hash=$(sha256sum "$path_base/$file_name.pdf" | sed "s/\\s.*//g")
 
-        convert pdf2imgs convert -density 200 "$path_base/$file_name.pdf" "$manuals_imgs/${file_name}_%02d.jpg"
+        convert pdf2imgs convert -density 200 "$path_base/$file_name.pdf" "$manuals_imgs/${hash}_%02d.jpg"
 
-        echo $(find $manuals_imgs | grep -c "$file_name") >$manuals_atr/$file_name
+        echo "$file_name" >$manuals_atr/$hash
+        find $manuals_imgs | grep $hash | sed "s/^/\//g" >>"$manuals_atr/$hash"
     done
     ;;
 *)
