@@ -9,18 +9,12 @@ pub fn list_docs(handle: tauri::AppHandle) -> Vec<String> {
         .resolve_resource("manuals")
         .expect("failed to resolve resource");
 
-    let entries = match fs::read_dir(&resource_path) {
-        Ok(dir) => dir,
-        Err(_) => panic!("readDir is broken!"),
-    };
+    let entries = fs::read_dir(&resource_path).unwrap();
 
     entries
-        .map(|f| match f {
-            Ok(f) => f,
-            Err(_) => panic!("readDir is broken!"),
-        })
         .map(|fd| {
-            fd.path()
+            fd.unwrap()
+                .path()
                 .display()
                 .to_string()
                 .split("/")
@@ -61,6 +55,4 @@ pub fn list_docs(handle: tauri::AppHandle) -> Vec<String> {
         .into_iter()
         .flatten()
         .collect::<Vec<String>>()
-
-    // .into_iter().flatten().collect::<Vec<u8>>()
 }
