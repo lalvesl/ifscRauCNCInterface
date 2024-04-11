@@ -3,11 +3,14 @@
 
 mod commands;
 
-use commands::docs;
+use commands::{cnc_code, docs};
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![docs::list_docs])
+        .invoke_handler(tauri::generate_handler![
+            docs::list_docs,
+            cnc_code::list_cnc_files,
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
