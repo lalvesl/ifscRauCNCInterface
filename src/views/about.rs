@@ -23,11 +23,11 @@ pub fn About() -> impl IntoView {
         <main class="h-full w-full flex justify-center scroll pt-8 text-gifsc text-center font-semibold">
             <div class="flex flex-col">
                 <div>
-                    <h1 class="text-4xl pt-16" id="edital">Sobre o Projeto</h1>
-                    <h1 class="text-2xl m-4" id="edital">{"Edital nº 02/2023/PROPPI - Universal"}</h1>
+                    <h1 class="text-4xl pt-16">Sobre o Projeto</h1>
+                    <h1 class="text-2xl m-4">{"Edital nº 02/2023/PROPPI - Universal"}</h1>
                 </div>
                 <div>
-                    <h1 class="text-4xl pt-16" id="edital">Manuais</h1>
+                    <h1 class="text-4xl pt-16">Manuais</h1>
                     <div class="pt-2 flex flex-wrap justify-center">
                     {
                         move || manuals
@@ -44,7 +44,6 @@ pub fn About() -> impl IntoView {
                     }
                     </div>
                 </div>
-
             </div>
         </main>
         <a class="absolute bottom-0 left-0 m-4" href="/">
