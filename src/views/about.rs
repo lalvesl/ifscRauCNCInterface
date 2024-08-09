@@ -36,7 +36,7 @@ pub fn About() -> impl IntoView {
                         .filter(|s| s.starts_with("Manual"))
                         .map(|s| view!{<div class="m-4">
                                 <a href={ ["/manual/", &encode(s)].join("") }>
-                                    <Button text={s.to_string().replace(".pdf", "")} button_type={"thumb".to_string()}></Button>
+                                    <Button text={s.to_string().replace(".pdf", "")} button_type="thumb"></Button>
                                 </a>
                             </div>
                             })

@@ -2,8 +2,8 @@ use leptos::*;
 
 #[component]
 pub fn Button(
-    #[prop(default = "Click".to_string())] text: String,
-    #[prop(default = "default".to_string())] button_type: String,
+    #[prop(into, default = "Click".to_string())] text: String,
+    #[prop(into, default = "default".to_string())] button_type: String,
 ) -> impl IntoView {
     let common_class = "rounded text-2xl p-4 hover:outline hover:outline-gifsc";
 

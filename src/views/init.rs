@@ -9,7 +9,7 @@ pub fn InitView() -> impl IntoView {
             <h2 class="my-2 text-3xl font-semibold">Insira um pendrive</h2>
         </div>
         <a href="/about" class="absolute bottom-0 right-0 m-4">
-            <Button text="Ajuda & Sobre".to_string()/>
+            <Button text="Ajuda & Sobre"/>
         </a>
     }
 }
