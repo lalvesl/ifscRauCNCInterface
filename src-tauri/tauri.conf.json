@@ -1,7 +1,7 @@
 {
   "build": {
-    "beforeDevCommand": "trunk serve",
-    "beforeBuildCommand": "npm run tailwind && trunk build",
+    "beforeDevCommand": "sh -c \"trunk serve & npm run dev\"",
+    "beforeBuildCommand": "trunk build",
     "devPath": "http://localhost:1420",
     "distDir": "../dist",
     "withGlobalTauri": true
@@ -71,9 +71,7 @@
       "active": true,
       "targets": "all",
       "identifier": "br.edu.ifsc",
-      "resources": [
-        "manuals/*"
-      ],
+      "resources": ["manuals/*"],
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",

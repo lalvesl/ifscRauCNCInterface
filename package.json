@@ -1,9 +1,10 @@
 {
   "scripts": {
-    "tailwind-dev": "npx tailwindcss -i src/styles.css -o src/styles.min.css --watch",
-    "tailwind": "npx tailwindcss -i src/styles.css -o src/styles.min.css --minify"
+    "dev": "npx tailwindcss -i src/styles.css -o src/styles.min.css --watch",
+    "build": "npx tailwindcss -i src/styles.css -o src/styles.min.css --minify"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.1"
   }
 }
+
