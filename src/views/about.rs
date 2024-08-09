@@ -20,7 +20,7 @@ pub fn About() -> impl IntoView {
     });
 
     view! {
-        <main class="h-full w-full flex justify-center scroll pt-8 text-gifsc text-center font-semibold">
+        <main class="h-full w-full flex justify-center scroll pt-8 text-ifsc-g-3 text-center font-semibold">
             <div class="flex flex-col">
                 <div>
                     <h1 class="text-4xl pt-16">Sobre o Projeto</h1>
