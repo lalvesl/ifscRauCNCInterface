@@ -2,4 +2,4 @@
 
 ## Recommended IDE Setup
 
-[nvim,btw](https://neovim.io/) + [tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer) + [leptosfmt](https://github.com/bram209/leptosfmt)
+[nvim](https://neovim.io/)-btw + [tauri](https://tauri.app/) + [rust-analyzer](https://rust-analyzer.github.io/) + [leptosfmt](https://github.com/bram209/leptosfmt)
